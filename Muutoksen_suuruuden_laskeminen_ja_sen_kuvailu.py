@@ -91,7 +91,7 @@ hinnat.head(8)
 
 #### Lopuksi indeksöidään noiden päivämäärien mukaan
 
-hinnat.set_index('Ajankohta')
+hinnat.index = hinnat['Ajankohta']
 
 
 # In[7]:
@@ -193,7 +193,7 @@ hinnat.groupby(hinnat['Ajankohta'].dt.month)['Muu Suomi'].describe(percentiles =
 
 # Valitaan tässä perusajankohdaksi vuoden 2015 tammikuu.
 
-# In[17]:
+# In[16]:
 
 
 #### Lisätään taulukkoon uudet sarakkeet indeksilukuja varten
@@ -202,7 +202,7 @@ hinnat.groupby(hinnat['Ajankohta'].dt.month)['Muu Suomi'].describe(percentiles =
 hinnat['PKS indeksi'] = hinnat['Pääkaupunkiseutu'] / hinnat['Pääkaupunkiseutu'].iloc[0] * 100
 
 
-# In[18]:
+# In[17]:
 
 
 ##### Katsotaan, näyttävätkö laskelmat oikean suuntaisilta
@@ -210,7 +210,7 @@ hinnat['PKS indeksi'] = hinnat['Pääkaupunkiseutu'] / hinnat['Pääkaupunkiseut
 hinnat.head()
 
 
-# In[19]:
+# In[18]:
 
 
 ##### Katsotaan, näyttävätkö laskelmat oikean suuntaisilta
@@ -218,7 +218,7 @@ hinnat.head()
 hinnat.tail()
 
 
-# In[20]:
+# In[19]:
 
 
 ##### Tehdään sama muun Suomen hinnoille
@@ -230,7 +230,7 @@ hinnat.tail()
 hinnat['Muu Suomi indeksi'] = hinnat['Muu Suomi'] / hinnat['Muu Suomi'].iloc[0] * 100
 
 
-# In[21]:
+# In[20]:
 
 
 ##### Katsotaan, näyttävätkö laskelmat oikean suuntaisilta
@@ -238,7 +238,7 @@ hinnat['Muu Suomi indeksi'] = hinnat['Muu Suomi'] / hinnat['Muu Suomi'].iloc[0] 
 hinnat.head()
 
 
-# In[22]:
+# In[21]:
 
 
 ##### Katsotaan, näyttävätkö laskelmat oikean suuntaisilta
@@ -248,21 +248,21 @@ hinnat.tail()
 
 # Reaaliarvo laskettaessa yleinen hintojen muutoksen vaikutus poistetaan ja jäljellä jää todellinen, reaalinen, muutos.
 
-# Tällaisissa tapauksissa lasketaan kaikkien arvojen reaaliarvo samana ajankohtana. Usein käytännön tilanteissa tuo on viimeisin tiedossa oleva ajankohta. Niin myös seuraavissa laskuissa eli vuoden 2019 syyskuu.
+# Tällaisissa tapauksissa lasketaan kaikkien arvojen reaaliarvo samana ajankohtana. Usein käytännön tilanteissa tuo on viimeisin tiedossa oleva ajankohta. Niin myös seuraavissa laskuissa.
 
 # Elinkustannusindeksi kuvaa yleisen hintatason muutoksia ja kahden ajankohdan elinkustannusindeksin suhde on kerroin, joka kertoo hintojen muutoksen suuruuden.
 
-# Excel-tiedoston toisessa välilehdessä on asuntojen hintojen ajankohtien elinkustannusindeksit. Otetaan ne käyttöön ja lasketaan jokaiselle ajankohdalle kerroin, jolla sen ajankohdan hinta muutetaan vuoden 2019 syyskuun rahan arvoa vastaavaksi. 
+# Excel-tiedoston toisessa välilehdessä on asuntojen hintojen ajankohtien elinkustannusindeksit. Otetaan ne käyttöön ja lasketaan jokaiselle ajankohdalle kerroin, jolla sen ajankohdan hinta muutetaan viimeisen indeksiluvun ajankohdan rahan arvoa vastaavaksi. 
 
-# In[23]:
+# In[22]:
 
 
 #### Luetaan elinkustannusindeksit Excel-tiedostosta tietokehykseen.
 
-elinkustannusindeksi = pd.read_excel('http://www.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_2015-2019.xlsx', sheet_name='Elinkustannusindeksi')
+elinkustannusindeksi = pd.read_excel('http://www.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx', sheet_name='Elinkustannusindeksi')
 
 
-# In[24]:
+# In[23]:
 
 
 #### Katsotaan, miltä data näyttää alusta
@@ -270,7 +270,7 @@ elinkustannusindeksi = pd.read_excel('http://www.haaga-helia.fi/~rdi1lh101/Dataa
 elinkustannusindeksi.head()
 
 
-# In[25]:
+# In[24]:
 
 
 #### Katsotaan, miltä data näyttää lopusta
@@ -278,7 +278,7 @@ elinkustannusindeksi.head()
 elinkustannusindeksi.tail()
 
 
-# In[26]:
+# In[25]:
 
 
 #### Ihan hyvältä näyttää, eikö.
@@ -290,7 +290,7 @@ elinkustannusindeksi.tail()
 elinkustannusindeksi['Muutoskerroin'] = elinkustannusindeksi['Pisteluku'].iloc[-1] / elinkustannusindeksi['Pisteluku']
 
 
-# In[27]:
+# In[26]:
 
 
 #### Katsotaan lopputulosta alusta
@@ -298,7 +298,7 @@ elinkustannusindeksi['Muutoskerroin'] = elinkustannusindeksi['Pisteluku'].iloc[-
 elinkustannusindeksi.head()
 
 
-# In[28]:
+# In[27]:
 
 
 #### Ja lopusta
@@ -312,7 +312,7 @@ elinkustannusindeksi.tail()
 
 # Jotta kunkin kuukauden neliöhinta löytää oikean kertoimella, jolla se kerrotaan viimeisen ajankohdan rahan arvoksi muutettaessa, tulee elinkustannusindeksi-tietokehyksessä ajankohdat muuttaa päivämääriksi samalla tavalla kuin yllä hinnat-tietokehyksessä.
 
-# In[29]:
+# In[28]:
 
 
 #### Muutetaan Tilastokeskuksen datan päiväysmuotoilu ymmärrettäväksi.
@@ -332,15 +332,15 @@ elinkustannusindeksi['Ajankohta'] = pd.to_datetime(elinkustannusindeksi['Ajankoh
 elinkustannusindeksi.head(8)
 
 
-# In[30]:
+# In[29]:
 
 
 #### Lopuksi indeksöidään noiden päivämäärien mukaan
 
-elinkustannusindeksi.set_index('Ajankohta')
+elinkustannusindeksi.index = elinkustannusindeksi['Ajankohta']
 
 
-# In[31]:
+# In[30]:
 
 
 ##### Katsotaan taas, mitä onkaan tullut tehtyä.
@@ -348,16 +348,18 @@ elinkustannusindeksi.set_index('Ajankohta')
 elinkustannusindeksi
 
 
-# In[32]:
+# In[31]:
 
 
 ##### Yhdistetään nyt hinnat-tietokehyksen Pääkaupunkiseudun ja Muun Suomen nimellishinnat sekä elinkustannusindeksi-tietokehyksen muutoskertoimet samaan tietokehykseen.
-#### reaaliarvot = pd.concat([hinnat['Ajankohta'],elinkustannusindeksi['Ajankohta']], axis = 1)
 
-reaaliarvot = pd.merge(hinnat, elinkustannusindeksi, how='left', on='Ajankohta')
+reaaliarvot = pd.concat([hinnat,elinkustannusindeksi], axis = 1)
+
+#### Toinen tapa:
+#### reaaliarvot = pd.merge(hinnat, elinkustannusindeksi, how='left', on='Ajankohta')
 
 
-# In[33]:
+# In[32]:
 
 
 ##### Miltähän näyttää?
@@ -365,7 +367,7 @@ reaaliarvot = pd.merge(hinnat, elinkustannusindeksi, how='left', on='Ajankohta')
 reaaliarvot.head()
 
 
-# In[34]:
+# In[33]:
 
 
 ##### Miltähän näyttää?
@@ -375,7 +377,7 @@ reaaliarvot.tail()
 
 # Tässä on jo niin monta saraketta, että lukeminen vaikeutuu. Pidetään tässä tietokehyksessä vain reaaliarvojen laskemiseen liittyvät asiat ja poistetaan muut sarakkeet.
 
-# In[35]:
+# In[34]:
 
 
 ##### Poistetaan indeksi-sarakkeet ja pisteluku-sarakkeet
@@ -385,7 +387,7 @@ reaaliarvot = reaaliarvot.drop(columns = ['PKS indeksi', 'Muu Suomi indeksi', 'P
 
 # Lisätään tähän sarakkeet Pääkaupunkiseudun ja Muun Suomen asuntojen reaaliarvoille ja lasketaan nuo reaaliarvot.
 
-# In[36]:
+# In[35]:
 
 
 ##### Lasketaan ja lisätään reaaliarvot
@@ -395,7 +397,7 @@ reaaliarvot['PKS-reaali'] = reaaliarvot['Pääkaupunkiseutu'] * reaaliarvot['Muu
 reaaliarvot['Muu-Suomi-reaali'] = reaaliarvot['Muu Suomi'] * reaaliarvot['Muutoskerroin']
 
 
-# In[37]:
+# In[36]:
 
 
 ##### Katsotaan, miltä luvut näyttävät ja vaikuttavatko ne oikeilta.
@@ -403,7 +405,7 @@ reaaliarvot['Muu-Suomi-reaali'] = reaaliarvot['Muu Suomi'] * reaaliarvot['Muutos
 reaaliarvot.head()
 
 
-# In[38]:
+# In[37]:
 
 
 ##### Katsotaan, miltä luvut näyttävät ja vaikuttavatko ne oikeilta.
@@ -411,17 +413,11 @@ reaaliarvot.head()
 reaaliarvot.tail()
 
 
-# In[39]:
-
-
-##### TÄSSÄ TÄSSÄ TÄSSÄ
-
-
 # ## Lasketaan muutosprosentteja
 
 # Indeksejä laskettaessa verrattiin muutosta tiettyyn alussa kiinnitettyyn perusajankohdan arvoon. Toinen paljon käytetty tapa on verrata muutosta edelliseen arvoon. Esimerkkidatassa tämä tarkoittaa laskemista muutosta edellisen kuukauden hintaan nähden. Tämän voi tehdä nimellisillä tai reaalisilla arvoilla tai molemmilla. Tehdään nämä seuraavaksi.
 
-# In[40]:
+# In[38]:
 
 
 ##### Lasketaan hintojen prosenttimuutokset aina edelliseen kuukauteen.
@@ -430,7 +426,7 @@ hinnat['PKS-muutos%'] = hinnat['Pääkaupunkiseutu'].pct_change()
 hinnat['Muu-Suomi-muutos%'] = hinnat['Muu Suomi'].pct_change()
 
 
-# In[41]:
+# In[39]:
 
 
 ##### Katsotaan laskujen tulosta ja tarkistetaan oikeellisuus
@@ -438,7 +434,7 @@ hinnat['Muu-Suomi-muutos%'] = hinnat['Muu Suomi'].pct_change()
 hinnat.head()
 
 
-# In[42]:
+# In[40]:
 
 
 #### Muutetaan prosenttimuotoilut desimaaliesityksestä prosenttiluvuiksi
@@ -449,25 +445,25 @@ hinnat.head()
 #### hinnat.style.format({'Muu-Suomi-muutos%': '{:.2f} %'})
 
 
-# In[43]:
+# In[41]:
 
 
 ##### Katsotaan laskujen tulosta ja tarkistetaan oikeellisuus
 
 hinnat.tail()
 
-##### .style.format({'PKS-Muutos%': '{:.1f} %'})
+##### .style.format({'PKS-Muutos%': '{:.2f} %'})
 
 
-# In[44]:
+# In[42]:
 
 
 ##### Yhdistetään pääkaupunkiseudun ja muun Suomen hintojen muutokset omaan tietokehykseen
 
-muutokset = pd.concat([hinnat['PKS-muutos%'],hinnat['Muu-Suomi-muutos%']], axis =1)
+muutokset = pd.concat([hinnat['PKS-muutos%'],hinnat['Muu-Suomi-muutos%']], axis = 1)
 
 
-# In[45]:
+# In[43]:
 
 
 #### Katsellaan, miltä näyttää
@@ -475,7 +471,7 @@ muutokset = pd.concat([hinnat['PKS-muutos%'],hinnat['Muu-Suomi-muutos%']], axis 
 muutokset.head(10)
 
 
-# In[46]:
+# In[44]:
 
 
 #### Katsellaan, miltä näyttää
@@ -483,11 +479,11 @@ muutokset.head(10)
 muutokset.tail(10)
 
 
-# ## Kuviot
+# ## Kuviot -- graafinen esittäminen
 
 # Lopuksi piirretään kuvioita äsken lasketuista asioista. Aluksi tarvitaan jälleen apua Pythonin kirjastoista, joiden avulla kuviot saadaan tehtyä. Otetaan ne käyttöön.
 
-# In[47]:
+# In[45]:
 
 
 #### Käytetään kirjastoa matplotlib ja annetaan sille lempinimi plt.
@@ -499,7 +495,7 @@ plt.style.use('seaborn-whitegrid')
 
 # Piirretään ensin viivakuvio alkuperäisistä pääkaupunkiseudun ja muun Suomen neliöhinnoista. Parannellaan kuvaa vähitellen, jotta eri osien merkitys valkenee.
 
-# In[48]:
+# In[46]:
 
 
 ##### Piirretään pääkaupunkiseudun neliöhinnoista viivakuvio.
@@ -509,7 +505,7 @@ plt.style.use('seaborn-whitegrid')
 hinnat['Pääkaupunkiseutu'].plot()
 
 
-# In[49]:
+# In[47]:
 
 
 ##### Samalla tavalla piirretään muun Suomen neliöhinnoista viivakuvio.
@@ -517,7 +513,7 @@ hinnat['Pääkaupunkiseutu'].plot()
 hinnat['Muu Suomi'].plot()
 
 
-# In[50]:
+# In[48]:
 
 
 #### Entä kummatkin yhteen kuvioon. yhteen
@@ -528,7 +524,7 @@ hinnat['Muu Suomi'].plot()
 
 # Laitetaan pääkaupunkiseudun asuntojen hintakuvio kuntoon.
 
-# In[51]:
+# In[49]:
 
 
 ##### Luodaan figure- ja axes-oliot
@@ -543,7 +539,7 @@ ax1.set(ylabel = 'Neliöhinta', xlabel = 'Päivämäärä', title = 'Pääkaupun
 ax1.plot(hinnat['Pääkaupunkiseutu'], color=color)
 
 
-# In[52]:
+# In[50]:
 
 
 ##### Jos tähän halutaan muun Suomen hinnat mukaan, lisätään ne samaan kuvaan
@@ -562,7 +558,7 @@ ax1.plot(hinnat['Pääkaupunkiseutu'], color=color)
 ax1.plot(hinnat['Muu Suomi'], color=color)
 
 
-# In[53]:
+# In[51]:
 
 
 #### Hankalampi tapaus on sellainen, jossa kummallekin tarvitaan oma pystyakseli. 
@@ -577,7 +573,7 @@ ax2.plot(hinnat['Muu Suomi'], color=color)
 ax2.tick_params(axis='y', labelcolor=color, grid_color=color)
 
 
-# In[54]:
+# In[52]:
 
 
 ##### Lopuksi yhdistetään nämä kaksi.
@@ -607,7 +603,7 @@ ax2.tick_params(axis='y', labelcolor=color, grid_color=color)
 
 # Piirretään reaaliarvoista vastaava kuvaaja.
 
-# In[55]:
+# In[53]:
 
 
 ##### Piirretään reaaliarvot samaan kuvaan.
@@ -627,7 +623,7 @@ ax_real.plot(reaaliarvot['Muu-Suomi-reaali'], color='purple', label ='Muu Suomi'
 #### legend = True  ### ei toimi
 
 
-# In[56]:
+# In[54]:
 
 
 ##### Piirretään nämä vielä samaan kuvioon.
@@ -647,9 +643,9 @@ ax_real1.plot(reaaliarvot['PKS-reaali'], label='Pääkaupunkiseudun reaalihinnat
 
 ##### Luodaan toinen axes-olio, jolla on yhteinen x-akseli edellisen olion kanssa:
 
+color = 'C2'
 ax_real2 = ax_real1.twinx()
 
-color = 'C1'
 ax_real2.set(ylabel='Muun Suomen reaalihinta neliöltä', label='Muun Suomen reaalihinnat')
 ax_real2.plot(reaaliarvot['Muu-Suomi-reaali'])
 ### ax_real2.tick_params(axis='y', labelcolor=color, grid_color=color)
@@ -659,7 +655,7 @@ ax_real2.plot(reaaliarvot['Muu-Suomi-reaali'])
 
 # Indekseillä kuvataan hintojen muutoksien suuruuksia ja suuntia. Niitä kuvataan tavallisesti viivakuviolla.
 
-# In[57]:
+# In[55]:
 
 
 ##### Piirretään indeksit samaan kuvaan.
@@ -688,7 +684,7 @@ ax_index.plot(hinnat['Muu Suomi indeksi'], color='green', label ='Muu Suomi', li
 
 # Toinen tapa on verrata muutosta edelliseen vuoteen. Edellä laskettiin aineistosta prosenttimuutoksia edellisen vuoden neliöhintoihin pääkaupunkiseudun ja muun Suomen asunnoista. Näitä kuvataan pylväskuviolla.Tehdään seuraavaksi vielä tälläinen kuvio.
 
-# In[58]:
+# In[56]:
 
 
 ##### Tehdään viimeisen kymmenen arvon muutoksista pylväskaavio
@@ -711,4 +707,37 @@ ax_pera.set_title('Pääkaupunkiseudun ja muun Suomen asuntojen neliöhintojen p
 ax_pera.set_xlabel('Tarkasteluaika')
 
 
-# Käy läpi kymmenen viime havainnon kohdalta, milloin pääkaupunkisuedun ja muun Suomen neliöhinnat ovat nousseet ja milloin taas laskeneet. Mieti, miten se kuviossa näkyy. Erityisesti, kommentoi ovatko komanneksi viimeisen havainnon kohdalla muun Suomen neliöhinnat korkeammat vai alemmat kuin edellisen vuoden neliöhinnat.
+# Käy läpi kymmenen viime havainnon kohdalta, milloin pääkaupunkisuedun ja muun Suomen neliöhinnat ovat nousseet ja milloin taas laskeneet. Mieti, miten se kuviossa näkyy. Erityisesti, kommentoi ovatko komanneksi viimeisen havainnon kohdalla muun Suomen neliöhinnat korkeammat vai alemmat kuin sitä edellisen vuoden neliöhinnat.
+
+# Kirjoitetaan vielä laskujemme tulokset Excel-tiedostoon.
+
+# In[57]:
+
+
+##### Kirjoitetaan tietokehykset Excel-tiedostoon omalle samannimiselle välilehdelleen.
+
+##### Kun kirjoitetaan yksi tietokehys Excel-tiedostoon, riittää seuraava.
+
+hinnat.to_excel("muutoksen_kuvailu.xlsx", sheet_name='hinnat')
+
+
+# In[59]:
+
+
+#### Kun kirjoitetaan samaan Excel-tiedostoon useampi välilehti, tarvitaan ExcelWriter-oliota.
+
+#### muutokset, hinnat, rewaaliarvot, elinkustannusindeksi
+
+with pd.ExcelWriter('muutoksen_kuvailu.xlsx') as writer:
+    reaaliarvot.to_excel(writer, sheet_name='reaaliarvot')
+    muutokset.to_excel(writer, sheet_name='muutokset')
+
+
+# ### Lähteitä
+# 
+# Aki Taanilan materiaali https://tilastoapu.wordpress.com/python/
+# 
+# Muuta tekijän materiaalia http://www.haaga-helia.fi/~Teaching/
+# 
+# Juha Nurmonen
+# bit.ly/hhjuha

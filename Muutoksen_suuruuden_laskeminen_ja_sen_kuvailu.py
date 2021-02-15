@@ -16,7 +16,7 @@
 
 # Käydään tässä läpi näitä kuvioita ja niihin liittyviä laskelmia. Datana on käytetty Tilastokeskuksen sivulta www.stat.fi (ks. Avainluvut-osio) haettuja vanhojen osakehuoneistojen hintoja kuukausittain pääkaupunkiseudulta ja muusta Suomesta viimeiseltä noin viideltä vuodelta. 
 
-# Haettu data on tallennettu Haaga-Helian myy-palvelimen käyttäjätunnuksen rdi1lh101 hakemiston public_html alihakemistoon Dataa ja tiedoston nimi on Asuntojen_hinnat_viimeisin.xlsx. Siihen viitataan internet-protokollalla http://www.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx. Internet käyttäjät ohjataan siis automaattisesti käyttäjien public_html-hakemistoon, muut hakemistot ovat käyttäjän yksityisiä.
+# Haettu data on tallennettu Haaga-Helian myy-palvelimen käyttäjätunnuksen rdi1lh101 hakemiston public_html alihakemistoon Dataa ja tiedoston nimi on Asuntojen_hinnat_viimeisin.xlsx. Siihen viitataan internet-protokollalla http://myy.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx. Internet käyttäjät ohjataan siis automaattisesti käyttäjien public_html-hakemistoon, muut hakemistot ovat käyttäjän yksityisiä.
 
 # Ensimmäisenä otetaan käyttöön Pythonin tarvittava perusohjelmakirjasto pandas, joiden avulla voidaan tehdä laskelmia.
 
@@ -35,7 +35,7 @@ import pandas as pd
 
 ##### Ladataan asuntojen hinnat sisältävä tiedosto ja annetaan sille nimi hinnat
 
-hinnat = pd.read_excel('http://www.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx', sheet_name='Hinnat')
+hinnat = pd.read_excel('http://myy.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx', sheet_name='Hinnat')
 
 ### Katsotaan, miltä sen kahdeksan ensimmäistä riviä näyttävät
 
@@ -259,7 +259,7 @@ hinnat.tail()
 
 #### Luetaan elinkustannusindeksit Excel-tiedostosta tietokehykseen.
 
-elinkustannusindeksi = pd.read_excel('http://www.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx', sheet_name='Elinkustannusindeksi')
+elinkustannusindeksi = pd.read_excel('http://myy.haaga-helia.fi/~rdi1lh101/Dataa/Asuntojen_hinnat_viimeisin.xlsx', sheet_name='Elinkustannusindeksi')
 
 
 # In[23]:
@@ -721,7 +721,7 @@ ax_pera.set_xlabel('Tarkasteluaika')
 hinnat.to_excel("muutoksen_kuvailu.xlsx", sheet_name='hinnat')
 
 
-# In[59]:
+# In[58]:
 
 
 #### Kun kirjoitetaan samaan Excel-tiedostoon useampi välilehti, tarvitaan ExcelWriter-oliota.
@@ -737,7 +737,13 @@ with pd.ExcelWriter('muutoksen_kuvailu.xlsx') as writer:
 # 
 # Aki Taanilan materiaali https://tilastoapu.wordpress.com/python/
 # 
-# Muuta tekijän materiaalia http://www.haaga-helia.fi/~Teaching/
+# Muuta tekijän materiaalia http://www.haaga-helia.fi/~nurju/Teaching/
 # 
 # Juha Nurmonen
-# bit.ly/hhjuha
+# <a href="http://myy.haaga-helia.fi/~nurju/">1u.fi/hhjuhanurmonen</a>
+
+# In[ ]:
+
+
+
+
